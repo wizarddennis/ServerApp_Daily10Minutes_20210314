@@ -1,6 +1,9 @@
 package kr.co.tjoeun.serverapp_daily10minutes_20210314.utils
 
 import okhttp3.FormBody
+import okhttp3.OkHttp
+import okhttp3.OkHttpClient
+import okhttp3.Request
 
 class ServerUtil {
 //    API를 호출해주는 함수들을 모아두기 위한 크래스.(코드 정리 차원)
@@ -27,6 +30,19 @@ class ServerUtil {
                 .add("email", id)
                 .add("password", pw)
                 .build()
+
+//            API 요청(Request)을 어디로 어떻게 할건지 종합하는 변수.
+            val request = Request.Builder()
+                .url(urlString) // 어디로 가는지 명시
+                .post(formData) // POST방식 - 필요데이터(formData) 들고 가도록
+                .build()
+
+//            startActivity처럼 -> 실제로 Request 를 수행하는 코드.
+//            클라이언트로써 동작하도록 도와주는 라이브러리 : OkHttp
+            val client = OkHttpClient()
+
+//            클라이언트가 실제 리퀘스트 수행.
+            client.newCall()
 
 
 
