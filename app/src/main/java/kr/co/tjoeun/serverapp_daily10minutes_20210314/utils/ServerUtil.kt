@@ -1,5 +1,6 @@
 package kr.co.tjoeun.serverapp_daily10minutes_20210314.utils
 
+import android.content.Context
 import android.util.Log
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
@@ -189,7 +190,8 @@ class ServerUtil {
         }
 
 //        프로젝트 목록 받아오는 함수.
-        fun getRequestProjectList(handler: JsonResponseHandler?) {
+//        저당된 토큰(SharedPreferences-Context재료필요)을 꺼내서 => 서버에 저장.(header를 통해서 전달)
+        fun getRequestProjectList(context : Context, handler: JsonResponseHandler?) {
 
 //    어디로? + 어떤 데이터? => URL 을 적을때 같이 완성되어야 한다.
 
@@ -211,6 +213,7 @@ class ServerUtil {
             val request = Request.Builder()
                 .url(urlString)
                 .get()
+                .header("X-Http-Token", ContextUtil.getToken(context))
                 .build()
 
 //    실제 호출 client 변수
