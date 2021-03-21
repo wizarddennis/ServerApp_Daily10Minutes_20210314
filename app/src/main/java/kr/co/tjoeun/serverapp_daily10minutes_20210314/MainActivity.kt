@@ -24,7 +24,7 @@ class MainActivity : BaseActivity() {
             
             // 이 아이디/비번이 회원이 맞는지, 서버에 확인 요청. => 로그인 요청
 
-            ServerUtil.postRequestLogin(inputId, inputPw, object : ServerUtil.JsonResponseHandler{
+            ServerUtil.postRequestLogin(inputId, inputPw, object : ServerUtil.JsonResponseHandler {
 
                 override fun onResponse(json: JSONObject) {
 //  JSON 파싱 -> UI 반영 코드 작성 영역
@@ -40,7 +40,14 @@ class MainActivity : BaseActivity() {
 //                        실패 처리. => 서버가 알려주는 실패사유를 토스트로 띄워보자 (UI 반영)
 
                         val message = json.getString("message")
-                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+
+//                        (백그라운드 쓰레드에서) 토스트를 띄우려고 하면 앱이 죽는다.
+//                        UI 동작 관련 코드는, 반드시 UI 쓰레드에서만 동작시켜야 함.
+                        runOnUiThread {
+                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+                        }
+
+
                     }
                 }
 
