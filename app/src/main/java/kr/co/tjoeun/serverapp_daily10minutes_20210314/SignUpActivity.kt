@@ -22,7 +22,7 @@ class SignUpActivity : BaseActivity() {
             val pw = pwEdt.text.toString()
             val nick = nicknameEdit.text.toString()
 
-//            서버 - ghldnjsrkdlq rlsmddp wjsthd : ServerUtil 에
+//            서버 - 회원가입 기능에 : ServerUtil 에
         }
 
     }
