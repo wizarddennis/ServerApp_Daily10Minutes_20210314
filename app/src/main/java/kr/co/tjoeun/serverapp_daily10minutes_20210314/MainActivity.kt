@@ -1,11 +1,13 @@
 package kr.co.tjoeun.serverapp_daily10minutes_20210314
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.co.tjoeun.serverapp_daily10minutes_20210314.adapters.ProjectAdapter
 import kr.co.tjoeun.serverapp_daily10minutes_20210314.datas.Project
+import kr.co.tjoeun.serverapp_daily10minutes_20210314.utils.ContextUtil
 import kr.co.tjoeun.serverapp_daily10minutes_20210314.utils.ServerUtil
 import org.json.JSONObject
 
@@ -24,6 +26,18 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        logoutBtn.setOnClickListener {
+//            로그인? id/pw => 서버에 회원이 맞나? 요청 => 성공시 토큰을 기기에 저장
+
+//            로그아웃? => 기기에 저장된 토큰을 날리는 작업.
+            ContextUtil.setToken(mContext, "")
+
+//            다시 로그인 화면으로 이동.
+            val myIntent = Intent(mContext, LoginActivity::class.java)
+            startActivity(myIntent)
+
+            finish()
+        }
 
     }
 
