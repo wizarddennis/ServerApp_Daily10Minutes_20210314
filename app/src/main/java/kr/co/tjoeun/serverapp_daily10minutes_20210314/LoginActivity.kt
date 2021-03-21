@@ -58,6 +58,13 @@ class LoginActivity : BaseActivity() {
 //                    서버/앱 약속 : code 가 200이면 로그인 성공.  그외 모든 값 로그인 실패
                     if(code == 200) {
 //                        로그인 성공시 처리. => 메인화면 진입, 로그인화면 종료
+
+//                        토큰값이 뭔지 추출해서 => SharedPrefereces에 저장.
+                        val dataObj = json.getJSONObject("data")
+                        val token = dataObj.getString("token")
+
+
+
                         val myIntent = Intent(mContext, MainActivity::class.java)
                         startActivity(myIntent)
 
