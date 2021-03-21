@@ -23,6 +23,8 @@ class LoginActivity : BaseActivity() {
         autoLoginCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
 //            isChecked : 지금 변경된 체크 여부.
 
+//            체크 된 값을 SharedPreferences에 기록, 앱이
+
             if(isChecked) {
 //                지금 체크로 찍혔다.
                 Toast.makeText(mContext, "로그인 성공시 자동 로그인 됩니다.", Toast.LENGTH_SHORT).show()
@@ -53,7 +55,11 @@ class LoginActivity : BaseActivity() {
 
 //                    서버/앱 약속 : code 가 200이면 로그인 성공.  그외 모든 값 로그인 실패
                     if(code == 200) {
-//                        로그인 성공시 처리.
+//                        로그인 성공시 처리. => 메인화면 진입, 로그인화면 종료
+                        val myIntent = Intent(mContext, MainActivity::class.java)
+                        startActivity(myIntent)
+
+                        finish()
                     }
                     else {
 //                        실패 처리. => 서버가 알려주는 실패사유를 토스트로 띄워보자 (UI 반영)

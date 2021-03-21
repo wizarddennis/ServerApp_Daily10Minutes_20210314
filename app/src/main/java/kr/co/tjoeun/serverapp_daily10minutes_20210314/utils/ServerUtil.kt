@@ -82,6 +82,8 @@ class ServerUtil {
                         Log.e("로그인실패사유", msgStr)
                     }
 
+                    handler?.onResponse(jsonObj)
+
                 }
             }
 
@@ -188,43 +190,43 @@ class ServerUtil {
 
 //        프로젝트 목록 받아오는 함수.
         fun getRequestProjectList(handler: JsonResponseHandler?) {
+
 //    어디로? + 어떤 데이터? => URL 을 적을때 같이 완성되어야 한다.
 
 
 //    주소가 복잡해짐 -> 복잡한 가공을 도와주는 클래스 활용. => URLBuilder
-//    http://15.164.153.174/email_check 의 뒤에, 파라미터를 쉽게 첨부하도록 도와주는 변수.
+//    http://15.164.153.174/project 의 뒤에, 파라미터를 쉽게 첨부하도록 도와주는 변수.
 
-    val urlBuilder = "${HOST_URL}/project".toHttpUrlOrNull()!!.newBuilder()
+            val urlBuilder = "${HOST_URL}/project".toHttpUrlOrNull()!!.newBuilder()
 
 
 //    필요한 파라미터가 다 붙었으면, 최종 형태 String으로 완성.
 //    최종형태 : 어디로? URL + 어떤? 파라미터가 전부 결합된 주소.
-    val urlString = urlBuilder.build().toString()
+            val urlString = urlBuilder.build().toString()
 
 //    임시 : 완성된 주소 로그 확인.
 //            Log.d("GET-이메일확인주소", urlString)
 
 //    요청 정보 종합
-    val request = Request.Builder()
-        .url(urlString)
-        .get()
-        .build()
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .build()
 
 //    실제 호출 client 변수
-    val client = OkHttpClient()
-    client.newCall(request).enqueue(object : Callback {
-        override fun onFailure(call: Call, e: IOException) {
+            val client = OkHttpClient()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
 
-        }
+                }
 
-        override fun onResponse(call: Call, response: Response) {
-            val bodyString = response.body!!.string()
-            val jsonObj = JSONObject(bodyString)
-            Log.d("서버응답본문", jsonObj.toString())
-            handler?.onResponse(jsonObj)
-        }
-
-    })
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버응답본문", jsonObj.toString())
+                    handler?.onResponse(jsonObj)
+                }
+            })
 
 
 }
