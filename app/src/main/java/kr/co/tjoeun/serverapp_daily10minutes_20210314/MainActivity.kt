@@ -1,10 +1,12 @@
 package kr.co.tjoeun.serverapp_daily10minutes_20210314
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import kr.co.tjoeun.serverapp_daily10minutes_20210314.utils.ServerUtil
 import org.json.JSONObject
 
@@ -18,6 +20,12 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
+        signUpBtn.setOnClickListener {
+            val myIntent = Intent(mContext, SignUpActivity::class.java)
+            startActivity(myIntent)
+        }
+
         loginBtn.setOnClickListener { 
             val inputId = emailEdt.text.toString()
             val inputPw = pwEdt.text.toString()
