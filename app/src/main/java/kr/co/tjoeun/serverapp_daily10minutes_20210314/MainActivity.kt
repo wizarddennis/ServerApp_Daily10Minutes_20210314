@@ -2,6 +2,8 @@ package kr.co.tjoeun.serverapp_daily10minutes_20210314
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.co.tjoeun.serverapp_daily10minutes_20210314.utils.ServerUtil
 import org.json.JSONObject
@@ -36,6 +38,9 @@ class MainActivity : BaseActivity() {
                     }
                     else {
 //                        실패 처리. => 서버가 알려주는 실패사유를 토스트로 띄워보자 (UI 반영)
+
+                        val message = json.getString("message")
+                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
                     }
                 }
 
