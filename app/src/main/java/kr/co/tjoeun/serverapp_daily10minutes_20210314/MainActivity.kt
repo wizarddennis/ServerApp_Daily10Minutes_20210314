@@ -36,7 +36,7 @@ class MainActivity : BaseActivity() {
 //        메인화면에 들어오면 => 프로젝트 목록이 뭐뭐있는지 서버에 요청(ServerUtil 함수 추가)
 //        받아온 결과를 분석해서=> Proejct() 형태로 만들어서 => mProjectList에 add 해주자.
 
-        ServerUtil.getRequestProjectList (object : ServerUtil.JsonResponseHandler {
+        ServerUtil.getRequestProjectList (mContext, object : ServerUtil.JsonResponseHandler {
             override fun onResponse(json: JSONObject) {
                 val dataObj = json.getJSONObject("data")
 
