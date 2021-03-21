@@ -1,13 +1,19 @@
 package kr.co.tjoeun.serverapp_daily10minutes_20210314.utils
 
-import okhttp3.FormBody
-import okhttp3.OkHttp
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import android.util.Log
+import okhttp3.*
+import org.json.JSONObject
+import java.io.IOException
 
 class ServerUtil {
 //    API를 호출해주는 함수들을 모아두기 위한 크래스.(코드 정리 차원)
 
+// 화면(액티비티와) 입장에서, 서버에 다녀오면 할 행동을 적는 행동 지침
+//    행동 지침을 전달하는 방식 : Interface
+
+    interface JsonResponseHandler {
+        fun onResponse (json : JSONObject)
+    }
 
 
 //    ServerUtil.함수() 처럼, 클래이름. 만 해도 바로 사용하게 도와주는 코드
@@ -19,7 +25,7 @@ class ServerUtil {
 
 //      함수 작성 - 로그인 기능 담당 함수.
 
-        fun postRequestLogin(id : String, pw : String) {
+        fun postRequestLogin(id : String, pw : String, handler : JsonResponseHandler?) {
 //            실제 기능 수행주소 ex. 로그인 - http://15.164.153.174/user
 //            HOST_URL/user => 최종 주소 완성.
 
@@ -42,11 +48,43 @@ class ServerUtil {
             val client = OkHttpClient()
 
 //            클라이언트가 실제 리퀘스트 수행.
-            client.newCall()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+//                    서버 연결 자체를 실패
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+
+                    val bodyString = response.body!!.string()
+
+//                  bodyString은 인코딩 된 상태라 읽가 어렵다.(한글깨짐)
+//                  bodyString을  JSONObject 로 변환시키면 읽을 수 있게됨.
+
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버응답본문", jsonObj.toString())
+
+                    // 연습 : code 에 적힌 숫자(Int)가 얼마인가?
+                    val codeNum = jsonObj.getInt("code")
 
 
+// 연습- 활용 : codeNum 200이면 로그인 성공, 아니면 로그인 실패. 로그 찍기
+//             로그인에 실패시 => 서버에서 아려주는 실패 사유를 로그로 찍자
+                    if(codeNum == 200) {
+                        Log.d("로그인 결과", "성공")
+                    }
+                    else {
+                        Log.e("로그인 결과", "실패")
 
+//                        추가로, message로 달려있는 String을 추출.
+                         val msgStr = jsonObj.getString("message")
+                        Log.e("로그인실패사유", msgStr)
+                    }
 
+                }
+            }
+
+            )
         }
     }
 }
