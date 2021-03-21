@@ -6,4 +6,5 @@ class Project {
     var imageUrl = "" // 그림파일 경로(String) 저장 변수.
 
 
+
 }
