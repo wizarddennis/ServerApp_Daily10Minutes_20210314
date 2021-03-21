@@ -18,6 +18,15 @@ class SignUpActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
+        checkEmailBtn.setOnClickListener {
+//
+            val inputEmail = emailEdt.text.toString()
+
+//            서버에 -> /email
+
+        }
+
         signUpBtn.setOnClickListener {
 //            이메일 / 비번 / 닉네임 -> 서버 회원가입기능에 전송.
             val email = emailEdt.text.toString()
@@ -35,8 +44,14 @@ class SignUpActivity : BaseActivity() {
 
                     runOnUiThread {
                         if(code == 200) {
-//                        성공 처리
-                            Toast.makeText(mContext, "??님 환영합니다.", Toast.LENGTH_SHORT).show()
+
+//                        성공 처리 가입한 사람의 이름을 추출해서 환영메시지
+//                            json > data{} > user {} > "nick_name" String 추출
+                            val dataObj = json.getJSONObject("data")
+                            val userObj = dataObj.getJSONObject("user")
+                            val userName =userObj.getString("nick_name")
+
+                            Toast.makeText(mContext, "${userName}님 환영합니다.", Toast.LENGTH_SHORT).show()
 
                             finish()
 

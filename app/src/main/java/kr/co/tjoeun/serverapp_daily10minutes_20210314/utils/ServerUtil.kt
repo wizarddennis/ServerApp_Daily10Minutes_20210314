@@ -139,5 +139,8 @@ class ServerUtil {
 
 
         }
+
+//        이메일 중복여부 체크 함수.
+        fun getRequestEmailCheck(email: String, handler: JsonResponseHandler? {
     }
 }
