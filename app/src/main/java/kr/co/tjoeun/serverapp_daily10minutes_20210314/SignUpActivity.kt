@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.widget.Toast
+import androidx.annotation.CheckResult
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kr.co.tjoeun.serverapp_daily10minutes_20210314.utils.ServerUtil
 import org.json.JSONObject
@@ -26,9 +27,19 @@ class SignUpActivity : BaseActivity() {
 //            서버에 -> /email_check 로 중복확인 요청 -> ServerUtil에 함수 추가 필요.
             ServerUtil.getRequestEmailCheck(inputEmail, object : ServerUtil.JsonResponseHandler {
                 override fun onResponse(json: JSONObject) {
+//                    코드값이 200 -> 사용가능, 아니면 사용불가.
 
+                    val code = json.getInt("code")
+
+                    runOnUiThread {
+                        if (code == 200) {
+                            CheckResultTxt.text = "사용해도 좋은 이메일입니다."
+                        }
+                        else {
+                            CheckResultTxt.text = "다른 이메일을 입력후, 재확인해 주세요."
+                        }
+                    }
                 }
-
             })
 
         }
