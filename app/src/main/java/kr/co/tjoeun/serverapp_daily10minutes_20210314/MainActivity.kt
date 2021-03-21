@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import kr.co.tjoeun.serverapp_daily10minutes_20210314.utils.ServerUtil
 import org.json.JSONObject
 

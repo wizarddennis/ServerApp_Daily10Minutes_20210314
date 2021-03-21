@@ -3,7 +3,7 @@ package kr.co.tjoeun.serverapp_daily10minutes_20210314
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
-import kotlinx.android.synthetic.main.activity_main.*
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kr.co.tjoeun.serverapp_daily10minutes_20210314.utils.ServerUtil
 import org.json.JSONObject
@@ -27,7 +27,27 @@ class SignUpActivity : BaseActivity() {
 //            서버 - 회원가입 기능에 전송 : ServerUtil 에 회원가입 함수 필요
             ServerUtil.putRequestSignUp(email, pw, nick, object : ServerUtil.JsonResponseHandler {
                 override fun onResponse(json: JSONObject) {
+// 회원가입 결과에 따른 UI 반영 필요
+//                    code : 200 이면 가입성공 -> 토스트 + 회원가입 화면 종료.
+//                    그외 값 : 서버가 주는 실패 사유를 -> 토스트
 
+                    val code = json.getInt("code")
+
+                    runOnUiThread {
+                        if(code == 200) {
+//                        성공 처리
+                            Toast.makeText(mContext, "??님 환영합니다.", Toast.LENGTH_SHORT).show()
+
+                            finish()
+
+                        }
+                        else {
+//                        실패 처리.  서버가 주는 message 스트링을 토스트로 출력
+                            val message = json. getString("message")
+                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+
+                        }
+                    }
                 }
 
             })
