@@ -19,5 +19,14 @@ class ContextUtil {
 //            열린 파일에 -> 자동로그인 항목을 저장하자.
             pref.edit().putBoolean(Is_AUTO_LOGIN, autoLogin).apply()
         }
+
+//        자동로그인 저장된 값 확인 기능
+        fun getAutoLogin(context: Context) : Boolean {
+//            메모장 파일을 열어보자
+            val pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+
+//            자동로그인 항목에 저장된 항목을 결과로 리턴.
+            return pref.getBoolean(Is_AUTO_LOGIN)
+        }
     }
 }
