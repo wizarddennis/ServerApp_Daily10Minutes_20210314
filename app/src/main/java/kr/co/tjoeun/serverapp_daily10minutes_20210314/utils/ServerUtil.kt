@@ -346,5 +346,55 @@ class ServerUtil {
                 }
             })
         }
+
+        //        특정 프로젝트 상세보기
+        fun getRequestProjectListDetail(context : Context, projectId: Int, handler: JsonResponseHandler?) {
+
+//            GET - 주소 완성 양식 2가지 방법.
+//            GET : 조회 => 몇번 글? 상세 조회 => /project/5 처럼, 주소를 이어붙이는 식. => Path 세그먼트
+//            GET : 조회 => 게시글목록? 진행중 (조건필터) => /project?status=ONGOING 처럼, 파라미터 주소 나열 => Query 세그먼트
+
+//            여기서 파라미터야라는 의미로 '?' 를 사용하는 것임.
+
+
+//    어디로? + 어떤 데이터? => URL 을 적을때 같이 완성되어야 한다.
+//    주소가 복잡해짐 -> 복잡한 가공을 도와주는 클래스 활용. => URLBuilder
+//    http://15.164.153.174/project 의 뒤에, 파라미터를 쉽게 첨부하도록 도와주는 변수.
+
+            val urlBuilder = "${HOST_URL}/project".toHttpUrlOrNull()!!.newBuilder()
+            urlBuilder.addEncodedPathSegment(projectId.toString())
+
+
+//    필요한 파라미터가 다 붙었으면, 최종 형태 String으로 완성.
+//    최종형태 : 어디로? URL + 어떤? 파라미터가 전부 결합된 주소.
+            val urlString = urlBuilder.build().toString()
+
+//    임시 : 완성된 주소 로그 확인.
+            Log.d("GET-이메일확인주소", urlString)
+
+//    요청 정보 종합
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .header("X-Http-Token", ContextUtil.getToken(context))
+                .build()
+
+//    실제 호출 client 변수
+            val client = OkHttpClient()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버응답본문", jsonObj.toString())
+                    handler?.onResponse(jsonObj)
+                }
+            })
+
+
+        }
     }
 }

@@ -90,7 +90,10 @@ class ViewPreojectDetailActivity : BaseActivity() {
 
                     if (code == 200 ) {
 
-//                        참여 신청 API : 어떤 변경신청이
+//                        참여 신청 API : 어떤 변경신청이 생겼는지 알 수 있도록, 프로젝트 데이터 내려줌.
+//                        포기 APN : 프로젝트 데이터 X. => 프로젝트 상태를
+
+                        ServerUtil.getRequestProjectListDetail(mContext, mProject.id, null)
 
 
                     } else {
@@ -99,14 +102,8 @@ class ViewPreojectDetailActivity : BaseActivity() {
                             Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
                         }
                     }
-
-
                 }
-
             })
-
-
-
         }
     }
 
