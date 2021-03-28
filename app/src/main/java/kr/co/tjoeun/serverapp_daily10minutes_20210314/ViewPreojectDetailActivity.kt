@@ -2,6 +2,7 @@ package kr.co.tjoeun.serverapp_daily10minutes_20210314
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_view_preoject_detail.*
@@ -94,6 +95,20 @@ class ViewPreojectDetailActivity : BaseActivity() {
 //        참여 인원 수 반영 : ?명 양식으로 가공
         memberCountTxt.text = "${mProject.ongoingUsersCount}명"
 
+//        내가 이 프로젝트에 참여중인가?
+//        참가상태 == "ONGOING"이면 참여중, 그 외 모든 경우 참여 X.
+        if(mProject.myLastStatus == "ONGOING") {
+//            참여하기 버튼 숨김
+//            포기하기 버튼 보여주기
+            applyBtn.visibility = View.GONE
+            giveUpBtn.visibility = View.VISIBLE
+        }
+        else {
 
+//            참여하기 보여주기, 포기하기 숨겨주기
+            applyBtn.visibility = View.VISIBLE
+            giveUpBtn.visibility = View.GONE
+
+        }
     }
 }
