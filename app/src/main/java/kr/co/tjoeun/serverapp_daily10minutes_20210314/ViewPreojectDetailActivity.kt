@@ -35,6 +35,11 @@ class ViewPreojectDetailActivity : BaseActivity() {
         projectTitleTxt.text = mProject.title
         Glide.with(mContext).load(mProject.imageUrl).into(projectImg)
 
+        projectDescTxt.text = mProject.description
+
+//        참여 인원 수 반영 : ?명 양식으로 가공
+        memberCountTxt.text = "${mProject.ongoingUsersCount}명"
+
 
     }
 }
