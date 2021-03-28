@@ -79,6 +79,35 @@ class ViewPreojectDetailActivity : BaseActivity() {
 
         }
 
+//        중도 포기 버튼 툴리면 => 포기 APN 호촐 => UI 새로 고침
+
+        giveUpBtn.setOnClickListener {
+
+            ServerUtil.deleteRequestGiveUpProject(mContext, mProject.id, object : ServerUtil.JsonResponseHandler {
+                override fun onResponse(json: JSONObject) {
+
+                    val code = json.getInt("code")
+
+                    if (code == 200 ) {
+
+//                        참여 신청 API : 어떤 변경신청이
+
+
+                    } else {
+                        val message =  json.getString("message")
+                        runOnUiThread {
+                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+
+                }
+
+            })
+
+
+
+        }
     }
 
     override fun setValues() {
