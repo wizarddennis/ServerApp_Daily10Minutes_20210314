@@ -327,7 +327,7 @@ class ServerUtil {
 //    요청 정보 종합
             val request = Request.Builder()
                 .url(urlString)
-                .get()
+                .delete()
                 .header("X-Http-Token", ContextUtil.getToken(context))
                 .build()
 
