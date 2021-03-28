@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ViewPreojectDetailActivity">
+    tools:context=".ViewProjectDetailActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -21,13 +21,13 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="#88000000"/>
+            android:src="#88000000" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center_vertical"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <TextView
@@ -35,13 +35,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="프로젝트 제목 자리"
+                android:textColor="#FFFFFF"
                 android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/projectDescTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="프로젝트 설명 문구자리"
+                android:text="프로젝트 설명 문구 자리"
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="5dp"/>
 
@@ -51,11 +52,12 @@
     </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/tagsLaoyout"
+        android:id="@+id/tagsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp">
+
 
 
     </LinearLayout>
@@ -70,12 +72,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="현재 참여 인원"/>
+            android:text="현재 참여 인원" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/memberCountTxt"
@@ -87,19 +89,53 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증 방법" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/proofMethodTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="~~사진을 인증글로.."
+            android:textColor="#000000"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+
     <Button
         android:id="@+id/applyBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="참여 신청하기"/>
+        android:layout_margin="10dp"
+        android:text="참여 신청하기" />
 
     <Button
         android:id="@+id/giveUpBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="포기하기"/>
+        android:layout_margin="10dp"
+        android:text="중도 포기하기" />
 
+    <Button
+        android:id="@+id/viewMemberBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="참여중인 인원 보러가기" />
 
 </LinearLayout>
