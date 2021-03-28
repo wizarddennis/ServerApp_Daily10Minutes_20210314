@@ -51,6 +51,16 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/tagsLaoyout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
