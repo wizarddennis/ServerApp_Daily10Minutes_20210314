@@ -86,7 +86,15 @@ class ViewPreojectDetailActivity : BaseActivity() {
 //      들어오는 Intent를 통해서 프로젝트 정보 저장
         mProject = intent.getSerializableExtra("projectInfo") as Project
 
-//      프로젝트 제목/이미지 표시.
+        refreshUI()
+    }
+
+
+
+//        서버에서 받은 데이터 (mProject) 를 기반으로 => UI 새로 반영 함수.
+
+    fun refreshUI() {
+        //      프로젝트 제목/이미지 표시.
         projectTitleTxt.text = mProject.title
         Glide.with(mContext).load(mProject.imageUrl).into(projectImg)
 
