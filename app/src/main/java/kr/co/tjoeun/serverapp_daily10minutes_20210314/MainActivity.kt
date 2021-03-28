@@ -1,9 +1,11 @@
 package kr.co.tjoeun.serverapp_daily10minutes_20210314
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.co.tjoeun.serverapp_daily10minutes_20210314.adapters.ProjectAdapter
 import kr.co.tjoeun.serverapp_daily10minutes_20210314.datas.Project
@@ -27,25 +29,30 @@ class MainActivity : BaseActivity() {
 
     override fun setupEvents() {
         logoutBtn.setOnClickListener {
-//            로그인? id/pw => 서버에 회원이 맞나? 요청 => 성공시 토큰을 기기에 저장
+//            [연습문제] 정말 로그아웃 하시겠습니까? 얼럿 띄우고 => OK인 경우에만 로그아웃.
+            val alert = AlertDialog.Builder(mContext)
+            alert.setTitle("로그아웃 호가인")
+            alert.setMessage("정말 로그")
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                //            로그인? id/pw => 서버에 회원이 맞나? 요청 => 성공시 토큰을 기기에 저장
 
 //            로그아웃? => 기기에 저장된 토큰을 날리는 작업.
-            ContextUtil.setToken(mContext, "")
+                ContextUtil.setToken(mContext, "")
 
 //            다시 로그인 화면으로 이동.
-            val myIntent = Intent(mContext, LoginActivity::class.java)
-            startActivity(myIntent)
+                val myIntent = Intent(mContext, LoginActivity::class.java)
+                startActivity(myIntent)
 
-            finish()
+                finish()
+            })
+            alert.setNegativeButton("취소", null)
+            alert.show()
         }
-
     }
 
     override fun setValues() {
         mAdapter = ProjectAdapter(mContext, R.layout.project_list_item, mProjectList)
         projectListView.adapter = mAdapter
-
-
 
 //        메인화면에 들어오면 => 프로젝트 목록이 뭐뭐있는지 서버에 요청(ServerUtil 함수 추가)
 //        받아온 결과를 분석해서=> Proejct() 형태로 만들어서 => mProjectList에 add 해주자.

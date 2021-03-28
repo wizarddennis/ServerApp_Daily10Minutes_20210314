@@ -40,7 +40,7 @@ class ContextUtil {
             val pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
 
 //            자동로그인 항목에 저장된 항목을 결과로 리턴.
-            return pref.getBoolean(Is_AUTO_LOGIN)
+            return pref.getBoolean(Is_AUTO_LOGIN, false)
         }
     }
 }
