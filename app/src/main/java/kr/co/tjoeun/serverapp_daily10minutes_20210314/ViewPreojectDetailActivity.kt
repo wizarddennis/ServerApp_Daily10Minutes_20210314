@@ -201,6 +201,8 @@ class ViewProjectDetailActivity : BaseActivity() {
         else {
             tagsLayout.visibility = View.VISIBLE
 
+            tagsLayout.removeAllViews()
+
 //            태그의 갯수 만큼, 텍스트뷰를 (tagsLayout에) 추가.
 
             for (tag  in mProject.hashTags) {
