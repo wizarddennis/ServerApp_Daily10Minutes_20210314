@@ -234,5 +234,71 @@ class ServerUtil {
 
 }
 
+
+//      프로젝트 참가 신청 함수
+
+        fun postRequestApplyProject(context : Context, projectId : Int, handler : JsonResponseHandler?) {
+//            실제 기능 수행주소 ex. 로그인 - http://15.164.153.174/user
+//            HOST_URL/user => 최종 주소 완성.
+
+            val urlString = "${HOST_URL}/project"
+
+//            POST 메쏘드 - formBody에 데이터 첨부.
+            val formData = FormBody.Builder()
+                .add("project_id", projectId.toString())
+                .build()
+
+//            API 요청(Request)을 어디로 어떻게 할건지 종합하는 변수.
+            val request = Request.Builder()
+                .url(urlString) // 어디로 가는지 명시
+                .post(formData) // POST방식 - 필요데이터(formData) 들고 가도록
+                .header("X-Http-Token", ContextUtil.getToken(context))
+                .build()
+
+//            startActivity처럼 -> 실제로 Request 를 수행하는 코드.
+//            클라이언트로써 동작하도록 도와주는 라이브러리 : OkHttp
+            val client = OkHttpClient()
+
+//            클라이언트가 실제 리퀘스트 수행.
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+//                    서버 연결 자체를 실패
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+
+                    val bodyString = response.body!!.string()
+
+//                  bodyString은 인코딩 된 상태라 읽가 어렵다.(한글깨짐)
+//                  bodyString을  JSONObject 로 변환시키면 읽을 수 있게됨.
+
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버응답본문", jsonObj.toString())
+
+                    // 연습 : code 에 적힌 숫자(Int)가 얼마인가?
+                    val codeNum = jsonObj.getInt("code")
+
+
+// 연습- 활용 : codeNum 200이면 로그인 성공, 아니면 로그인 실패. 로그 찍기
+//             로그인에 실패시 => 서버에서 아려주는 실패 사유를 로그로 찍자
+                    if(codeNum == 200) {
+                        Log.d("프로젝트 등록 결과", "성공")
+                    }
+                    else {
+                        Log.e("프로젝트 등록 결과", "실패")
+
+//                        추가로, message로 달려있는 String을 추출.
+                        val msgStr = jsonObj.getString("message")
+                        Log.e("프로젝트 등록 실패사유", msgStr)
+                    }
+
+                    handler?.onResponse(jsonObj)
+
+                }
+            }
+
+            )
+        }
     }
 }
