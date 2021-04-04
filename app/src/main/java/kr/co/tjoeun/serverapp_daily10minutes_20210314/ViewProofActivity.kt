@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.DatePicker
 import kotlinx.android.synthetic.main.activity_view_proof.*
+import kr.co.tjoeun.serverapp_daily10minutes_20210314.datas.Project
+import kr.co.tjoeun.serverapp_daily10minutes_20210314.utils.ServerUtil
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -13,6 +16,9 @@ class ViewProofActivity : BaseActivity() {
 
 //    인증을 확인하려는 날짜를 Calendar 형태로 저장해두자.
     val mProofDate = Calendar.getInstance()
+
+//    어떤 프로젝트에 대한 인증글을 보는건지.
+    lateinit var mProject : Project
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +48,9 @@ class ViewProofActivity : BaseActivity() {
                     val sdf = SimpleDateFormat("yyyy년 M월 d일")
                     dateTxt.text = sdf.format(mProofDate.time)
 
+//                    3. 해당 날짜의 해당 프로젝트에 맞는 인증글 목록 불러오기.(서버통신)
+
+
 
 
 
@@ -61,7 +70,23 @@ class ViewProofActivity : BaseActivity() {
 
     }
 
+    fun getProofListFromServer() {
+
+//        서버에 인증글 불러오는 기능 활용.  ServerUtil 활용.
+
+//        mProofDate => String으로 가공 (2020-06-09 등 양식) 해서 첨부.
+
+        val serverFormat  = SimpleDateFormat("yyyy-MM-dd")
+
+        ServerUtil.getRequestProjectProofByDate(mContext, mProject.id, serverFormat.format(mProofDate.time), object : JSONObject {
+
+        })
+    }
+
     override fun setValues() {
+
+//        어떤 프로젝트를 볼건지 데이터 받아서 저장
+        mProject = intent.getSerializableExtra("project") as Project
 
 //        mProofDate에는 기본적으로 현재 일시가 기록되어있ㄷ.
 //        인증 확인 날짜에 현재 일시를 반영해보자.
