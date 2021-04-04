@@ -1,5 +1,6 @@
 package kr.co.tjoeun.serverapp_daily10minutes_20210314
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,11 +26,18 @@ class ViewProjectDetailActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_preoject_detail)
+        setCustomActionBar()
         setupEvents()
         setValues()
     }
 
     override fun setupEvents() {
+
+        viewProofBtn.setOnClickListener {
+            val myIntent = Intent(mContext, ViewPhotoActivity::class.java)
+            myIntent.putExtra("project", mProject)
+            startActivity(myIntent)
+        }
 
 //        참가신청 버튼이 눌리면 => 신청 API 호출.
 

@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.co.tjoeun.serverapp_daily10minutes_20210314.adapters.ProjectAdapter
@@ -24,6 +25,41 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         setupEvents()
         setValues()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+//        이 함수는 메인화면이 나타나려고 할때마다
+//        화면에
+    }
+
+//    새 알림이 있는지 서버에 물어보는 함수
+    fun askNewNotification() {
+        ServerUtil.getRequestNotification(mContext, false, object : ServerUtil.JsonResponseHandler {
+            override fun onResponse(json: JSONObject) {
+                val dataObj = json.getJSONObject("data")
+
+                val unreadNotiCount = dataObj.getInt("unread_noti_count")
+
+//                읽을 알림이 없다 : 빨간 동그라미 숨김
+//                읽을게 하나라도 있다 : 빨간 동그라미 + 4 등의 숫자 겹침
+
+
+                runOnUiThread {
+                    if (unreadNotiCount == 0) {
+                        notiCountTxt.visibility = View.GONE
+                    }
+                    else {
+                        notiCountTxt.visibility = View.VISIBLE
+
+//                    몇개인지 숫자도 반영.
+                        notiCountTxt.text = unreadNotiCount.toString()
+                    }
+                }
+            }
+        })
+
     }
 
     override fun setupEvents() {
@@ -78,6 +114,10 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setValues() {
+
+//        첫 화면 (메인화면)에서는 뒤로가기 버튼을 달지 않는다.
+//        뒤로가기 버튼을 아예 숨겨두자.(메인에서만)
+        backImg.visibility = View.GONE
 
         mAdapter = ProjectAdapter(mContext, R.layout.project_list_item, mProjectList)
 
