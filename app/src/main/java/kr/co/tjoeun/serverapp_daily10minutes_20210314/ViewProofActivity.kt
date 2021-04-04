@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.DatePicker
 import kotlinx.android.synthetic.main.activity_view_proof.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ViewProofActivity : BaseActivity() {
@@ -34,6 +35,17 @@ class ViewProofActivity : BaseActivity() {
 
 //                    연 / 월 / 일을 가지고 처리할 코드 작성.
 
+//                    1. 확인할 인증날짜를 변경 (mProofDate 반영)
+                    mProofDate.set(year, month, dayOfMonth)
+
+//                    2. 텍스튜뷰에 선택한 날짜 찍어주기
+                    val sdf = SimpleDateFormat("yyyy년 M월 d일")
+                    dateTxt.text = sdf.format(mProofDate.time)
+
+
+
+
+
                 }
 
             }
@@ -55,8 +67,15 @@ class ViewProofActivity : BaseActivity() {
 //        인증 확인 날짜에 현재 일시를 반영해보자.
         
 //        Calendar의 항목별 조회 기능 예시
-        dateTxt.text = "${mProofDate.get(Calendar.YEAR)}-${mProofDate.get(Calendar.MONTH+1)}-${mProofDate.get(Calendar)}"
+//        dateTxt.text = "${mProofDate.get(Calendar.YEAR)}-${mProofDate.get(Calendar.MONTH+1)}-${mProofDate.get(Calendar)}"
 
+//      SimpleDateFormat 클래스 활용 예시
+
+//        가공해줄 양식 지정
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+//        val sdf = SimpleDateFormat("yyyy년 M월 dd일)
+
+        dateTxt.text = sdf.format(mProofDate.time)
     }
 
 }
